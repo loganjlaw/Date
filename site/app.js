@@ -372,21 +372,23 @@ function transitionTo(renderNextScene) {
 
 async function saveChoice(choice, messageElement, detail = null) {
   messageElement.textContent = "Saving your answer...";
-  const payload = { choice };
-  if (choice === "custom") payload.text = detail;
-  if (choice === "date") payload.date = detail;
-  if (choice === "selfie_uploaded") payload.file = detail;
-  const response = await fetch("/api/selection", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
-  if (!response.ok) throw new Error("Request failed");
-}
 
-function setControlsDisabled(buttons, input, isDisabled) {
-  buttons.forEach((button) => { button.disabled = isDisabled; });
-  if (input) input.disabled = isDisabled;
+  try {
+    const answers = JSON.parse(
+      localStorage.getItem("dateAnswers") || "[]"
+    );
+
+    answers.push({
+      choice,
+      detail,
+      timestamp: new Date().toISOString(),
+    });
+
+    localStorage.setItem("dateAnswers", JSON.stringify(answers));
+    messageElement.textContent = "Saved!";
+  } catch {
+    throw new Error("Could not save answer");
+  }
 }
 
 async function handleChoice(choice, buttons, messageElement, input = null, detail = null) {
@@ -479,18 +481,39 @@ async function submitHseQuiz(form, answers, messageElement) {
   const submitButton = form.querySelector("button[type=submit]");
   submitButton.disabled = true;
   messageElement.textContent = "Checking your answers...";
+
   try {
-    const response = await fetch("/api/hse-quiz", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ answers }),
+    const correctAnswers = {
+      q1: "C",
+      q2: "C",
+      q3: "C",
+      q4: "B",
+    };
+
+    let score = 0;
+
+    for (const [question, correctAnswer] of Object.entries(correctAnswers)) {
+      if (answers[question] === correctAnswer) {
+        score++;
+      }
+    }
+
+    const quizResults = JSON.parse(
+      localStorage.getItem("hseQuizResults") || "[]"
+    );
+
+    quizResults.push({
+      answers,
+      score,
+      timestamp: new Date().toISOString(),
     });
-    const payload = await response.json();
-    if (!response.ok || !payload.ok || !Number.isInteger(payload.score)) throw new Error("Quiz save failed");
-    transitionTo(() => renderHseScore(payload.score));
+
+    localStorage.setItem("hseQuizResults", JSON.stringify(quizResults));
+
+    transitionTo(() => renderHseScore(score));
   } catch {
     submitButton.disabled = false;
-    messageElement.textContent = "That did not save. Please try again.";
+    messageElement.textContent = "Something went wrong. Please try again.";
   }
 }
 
@@ -515,21 +538,26 @@ sceneContent.addEventListener("click", async (event) => {
 
   uploadButton.disabled = true;
   input.disabled = true;
-  messageElement.textContent = "Uploading your photo...";
+  messageElement.textContent = "Checking your photo...";
   try {
-    const formData = new FormData();
-    formData.append("photo", input.files[0]);
-    const response = await fetch("/api/upload", { method: "POST", body: formData });
-    const payload = await response.json();
-    if (!response.ok || !payload.ok || !payload.filename) throw new Error("Upload failed");
-    form.dataset.uploadFilename = payload.filename;
-    submitButton.disabled = false;
-    messageElement.textContent = "Photo uploaded. You can submit it now.";
-  } catch {
-    input.disabled = false;
-    uploadButton.disabled = false;
-    messageElement.textContent = "That upload did not work. Try a PNG, JPEG, or WebP under 5 MiB.";
+  const file = input.files[0];
+
+  if (!file) {
+    throw new Error("No photo selected");
   }
+
+  if (file.size > 5 * 1024 * 1024) {
+    throw new Error("Photo is too large");
+  }
+
+  form.dataset.uploadFilename = file.name;
+  submitButton.disabled = false;
+  messageElement.textContent = "Photo selected. You can submit it now.";
+} catch {
+  input.disabled = false;
+  uploadButton.disabled = false;
+  messageElement.textContent = "Please choose a PNG, JPEG, or WebP under 5 MiB.";
+}
 });
 
 sceneContent.addEventListener("click", (event) => {
