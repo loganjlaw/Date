@@ -1,0 +1,13 @@
+Temporary Website - System Requirements
+Updated: 2026-07-25
+
+Software installed by this project setup: none required for the current Pinggy architecture.
+
+Detected:
+- Python 3.11.7 (available and sufficient)
+- OpenSSH client 9.5p2 (available and sufficient)
+
+Before starting a Pinggy tunnel, confirm:
+ssh -V
+
+No Python packages, databases, containers, or other services are required.

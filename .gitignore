@@ -1,0 +1,12 @@
+# Visitor selections are local, potentially sensitive operational data.
+data/responses.txt
+data/uploads/
+
+# Python bytecode generated during local validation.
+__pycache__/
+*.py[cod]
+
+# Local handoff notes are intentionally not part of the public template.
+docs/
+data/responses.txt
+data/responses.txt

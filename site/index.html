@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6d9ef">
+    <title>Let's schedule a date!</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <audio id="background-music" loop autoplay preload="auto">
+      <source src="music/rick.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="fah-sound" preload="auto">
+      <source src="music/fah.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="donk-music" loop preload="auto">
+      <source src="music/donk.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="dreamscape" aria-hidden="true">
+      <span class="orb orb-pink"></span>
+      <span class="orb orb-blue"></span>
+      <span class="orb orb-lavender"></span>
+      <span class="halo"></span>
+      <span class="sparkle sparkle-one">✦</span>
+      <span class="sparkle sparkle-two">✦</span>
+      <span class="sparkle sparkle-three">✧</span>
+    </div>
+
+    <header class="floating-header">
+      <a class="brand" href="/" aria-label="Return to the beginning">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+      </a>
+      <div class="scene-indicator" aria-label="Current scene">
+        <span class="scene-dot" aria-hidden="true"></span>
+        <span id="scene-label">Scene 01</span>
+      </div>
+    </header>
+
+    <main class="experience-shell">
+      <section class="experience-card" id="experience" aria-labelledby="page-title">
+        <div class="card-glow" aria-hidden="true"></div>
+
+        <div class="progress-row" aria-label="Experience progress">
+          <span id="progress-copy">A tiny question</span>
+          <span id="progress-count">01 / 03</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <span id="progress-fill"></span>
+        </div>
+
+        <div class="scene-content" id="scene-content">
+          <div class="scene-layout">
+            <figure class="scene-visual">
+              <img src="images/1.png" alt="Illustration for the date invitation">
+            </figure>
+
+            <div class="scene-copy">
+              <p class="eyebrow"><span aria-hidden="true">✦</span> Your invitation</p>
+              <h1 id="page-title">Let's schedule a date!</h1>
+              <p class="intro">Be a good girl &amp; answer all the questions. I'll worry about the rest.</p>
+
+              <form class="choice-form" id="choice-form">
+                <fieldset>
+                  <legend class="sr-only">Choose an answer</legend>
+                  <div class="choices">
+                    <button type="button" data-choice="yes">
+                      <span>Yes</span>
+                      <span class="button-arrow" aria-hidden="true">↗</span>
+                    </button>
+                    <button type="button" data-choice="yes_of_course" class="secondary">
+                      <span>Yes, Of course</span>
+                      <span class="button-arrow" aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                </fieldset>
+                <p class="form-message" id="form-message" aria-live="polite"></p>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <p class="microcopy"><span aria-hidden="true">♡</span> One wrong choice, and I hope karma fucks you up.</p>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p>MADE FOR A CUTIE</p>
+      <span aria-hidden="true">✦</span>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
