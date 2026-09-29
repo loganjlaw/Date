@@ -35,10 +35,10 @@ const AVAILABLE_DATE_VALUES = [
 
 const questions = {
   1: {
-    eyebrow: "Your invitation",
-    title: "Let's schedule a date!",
+    eyebrow: "Special invitation",
+    title: "Down for a wild-cat night?",
     description:
-      "Be a good girl & answer all the questions. I'll worry about the rest.",
+      "Looks like this Wildcat has a little crush... are you feeling paws-itive about going on a date?",
     image: "images/1.png",
     choices: [
       {
@@ -55,8 +55,8 @@ const questions = {
 
   2: {
     eyebrow: "A little question",
-    title: "Do you like Ali?!?!",
-    description: "Afterall, he's really handsome ngl.",
+    title: "Don't ya like me just a little bit?!?!",
+    description: "After all, this Wildcat only has eyes for you!",
     image: "images/2.png",
     negativeImage: "images/2-no.png",
     choices: [
@@ -74,8 +74,8 @@ const questions = {
 
   3: {
     eyebrow: "Your turn",
-    title: "How do you like it?",
-    description: "I guess your opinion matters...",
+    title: "How would you like a wild-adventure?",
+    description: "You pick the adventure, I'll bring my charm.",
     image: "images/3.png",
     choices: [
       {
